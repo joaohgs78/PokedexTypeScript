@@ -1,18 +1,25 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "module": "CommonJS",
-        "sourceMap": true,
-        "outDir": "./build",
-        "rootDir": "./src",
-        "removeComments": true,
-        "noImplicitAny": true,
-        "noEmitOnError": true,
-        "esModuleInterop": true,
-        "allowJs": true,
-        "paths": {
-            "@/*":["src"]
-        }
+      "target": "es5",
+      "lib": ["dom", "dom.iterable"],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "noEmit": true,
+      "esModuleInterop": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "allowImportingTsExtensions": true,
+      "jsx": "preserve",
+      "incremental": true,
+      "baseUrl": "src",
+      "paths": {
+        "@/": ["./src/"]
+      }
     },
+    "include": ["src//*.ts", "src//*.tsx"],
     "exclude": ["node_modules"]
-}
+  }
