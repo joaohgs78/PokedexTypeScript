@@ -1,142 +1,198 @@
-import React, {createContext, useState,useEffect, ReactNode} from 'react'
-import { toast } from 'react-toastify';
+import React, { createContext, useState, useEffect, ReactNode } from 'react'
+import axios, { AxiosResponse } from 'axios'
 
-interface PokemonData {
-    id: number;
-    name: string
-    amount: number;
+// DEFININDO O TIPO DOS POKEMONS O RETORNO []
+
+// interface Pokemon {
+//   name: string
+//   url: string
+//   sprites: {
+//     front_default: string
+//     other: {
+//       dream_world: {
+//         front_default: string
+//       }
+//       home: {
+//         front_default: string
+//       }
+//     }
+//     types: {
+//       0: {
+//         type: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       1: {
+//         type: {
+//           name: string
+//           url: string
+//         }
+//       }
+//     }
+
+//     moves: {
+//       0: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       1: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       2: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       3: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       4: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       5: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       6: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       7: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//       8: {
+//         move: {
+//           name: string
+//           url: string
+//         }
+//       }
+//     }
+//     stats: {
+//       0: {
+//         base_stat: number
+//         effort: number
+//       }
+//       1: {
+//         base_stat: number
+//         effort: number
+//       }
+//       2: {
+//         base_stat: number
+//         effort: number
+//       }
+//       3: {
+//         base_stat: number
+//         effort: number
+//       }
+//       4: {
+//         base_stat: number
+//         effort: number
+//       }
+//       5: {
+//         base_stat: number
+//         effort: number
+//       }
+//     }
+//   }
+// }
+
+interface Pokemon {
+  name: string;
+  url: string;
+  sprites: {
+    front_default: string;
+    other: {
+      dream_world: {
+        front_default: string;
+      };
+      home: {
+        front_default: string;
+      };
+    };
+  };
+  types: Array<{
+    type: {
+      name: string;
+      url: string;
+    };
+  }>;
+  moves: Array<{
+    move: {
+      name: string;
+      url: string;
+    };
+  }>;
+  stats: Array<{
+    base_stat: number;
+    effort: number;
+  }>;
 }
 
-interface PokemonCardContextData {
-  pokemonCart: PokemonData[]
-  pokemonAmount:number
-  searchByNamePokemon:(name: string) => void
-  addToPokemon:(pokemon: PokemonData,name:string) => void
-  removePokemon:(id:number) => void
-  removeAllClearPokemon:() => void
-  pokemonsPerPage: number
-  getCurrentPokemons: () => PokemonData[]
-  nextPage: () => void
-  prevPage: () => void
+
+// DEFININDO O TIPO PARA O CONTEXTO
+
+interface PokemonContextType {
+  pokemons: Pokemon[]
+  getPokemons: () => Promise<void>
 }
 
+// CRIANDO O CONTEXTO COM UM VALOR
+export const PokemonContext = createContext<PokemonContextType>({
+  pokemons: [],
+  getPokemons: async () => {}
+})
 
-// CRIAR UMA VARIVEL PARA STARTAR NOSSO CONTEXTO 
-const PokemonCardContext = createContext<PokemonCardContextData> (
-    {} as PokemonCardContextData
-)
+const PokemonProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // ESTADOS POKEMONS
+  const [pokemons, setPokemons] = useState<Pokemon[]>([])
 
-interface PokemonCardProviderProps {
-    children: ReactNode
-}
-
-    const PokemonCardProvider: React.FC<PokemonCardProviderProps> = ({children}) => {
-    
-        const [pokemonCart , setPokemonCart] = useState<PokemonData[]>([])
-        const [name,setName] = useState<PokemonData[]>([])
-        const [pokemonAmount, setPokemonAmout] = useState<number>(0)
-        const [currentPage, setCurrentPage] = useState<number>(1)
-       
-
-
-      {/** PAGINAÇÃO */}
-       
-     const pokemonsPerPage = 10
-
-     const getCurrentPokemons = () => {
-
-       const indexLastPokemon = currentPage * pokemonsPerPage
-       const indexFirstPokemon = indexLastPokemon  - pokemonsPerPage
-
-       return pokemonCart.slice(indexFirstPokemon, indexLastPokemon)
-
-     }
-
-
-     const nextPage = () => {
-        setCurrentPage((prevPage) => + 1)
-     }
-    
-
-     const prevPage =() => {
-        setCurrentPage((prevPage) => -1)
-     }
-        
- 
-        useEffect(() => {
-
-         if(pokemonCart) {
-            const amount = pokemonCart.reduce(
-            (acumulator, currentItem) => acumulator + 1 ,0)
-
-            setPokemonAmout(amount)
-         }
-
-    
-        },[pokemonCart])
-
-
-
-        const addToPokemon = (pokemon: PokemonData, name:string) => {
-        
-        const checkPokemon = pokemonCart.find((pokemon) => pokemon.name === name)
-        //pokemoncart.filter((item) => item.id !== id)
-        
-          if(checkPokemon) {
-            toast.error('Esse pokemon já foi capturado !')
-            return;
-          }
-
-          setPokemonCart([...pokemonCart, {...pokemon, name, amount: 1}])
-
-        }
-
-    
-         
-      const removePokemon = (id:number) => {
-        const pokemon = pokemonCart.filter((pokemon) => pokemon.id !== id)
-        setPokemonCart(pokemon)  
+  const getPokemons = async () => {
+    try {
+      const pokemonPoints: Promise<AxiosResponse<Pokemon>>[] = []
+      for (let i = 1; i <= 132; i++) {
+        pokemonPoints.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`))
       }
 
+      const response = await axios.all(pokemonPoints)
+      const fetchedPokemons = response.map((response) => response.data)
 
-      const removeAllClearPokemon = () => {
-        setPokemonCart([])
-      }
+      setPokemons(fetchedPokemons)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-   
+  useEffect(() => {
+    getPokemons()
+  }, [])
 
-     const searchByNamePokemon = (name: string) => {
+  console.log(pokemons)
 
-       const pokemonName = pokemonCart.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(name.toLowerCase())
-       )
-       setName(pokemonName)
-     }
-
-    return (
-
-
-      <PokemonCardContext.Provider
-
-        value={{
-        pokemonCart,
-        pokemonAmount,
-        searchByNamePokemon,
-        addToPokemon,
-        removePokemon,
-        removeAllClearPokemon,
-        pokemonsPerPage,
-        getCurrentPokemons,
-        nextPage,
-        prevPage,
-      }}>
-        
-        {children}
-      </PokemonCardContext.Provider>
-
-    )
-
-      
+  return (
+    <PokemonContext.Provider value={{ pokemons, getPokemons }}>
+      {children}
+    </PokemonContext.Provider>
+  )
 }
 
-export default PokemonCardProvider
+export default PokemonProvider

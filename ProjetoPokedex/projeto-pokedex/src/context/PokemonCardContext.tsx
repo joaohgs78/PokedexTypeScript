@@ -1,30 +1,37 @@
-import React, {createContext, useState,useEffect, ReactNode} from 'react'
+import React, {createContext, useState,useEffect, ReactNode,} from 'react'
 import { toast } from 'react-toastify';
-import {PokemonContext} from './PokemonContext'
+import PokemonContext from './PokemonContext'
+
 
 
 
 
 
 interface PokemonData {
-    id: number;
+    id: number
     name: string
-    amount: number;
+    amount: number
+    types:string
+}
+
+interface Pokemon {
+  name:string,
+  url:string
 }
 
 interface PokemonCardContextData {
   pokemonCart: PokemonData[]
   pokemonAmount:number
   
-  addToPokemon:(pokemon: PokemonData, name:string) => void
+  addToPokemon:(pokemon: Pokemon, name:string) => void
   removePokemon:(id:number) => void
   removeAllClearPokemon:() => void
   handleSearchName:(name: string) => void
 }
 
 
-// CRIAR UMA VARIVEL PARA STARTAR NOSSO CONTEXTO 
-const PokemonCardContext = createContext<PokemonCardContextData> (
+//CRIAR UMA VARIVEL PARA STARTAR NOSSO CONTEXTO 
+export const PokemonCardContext = createContext<PokemonCardContextData> (
     {} as PokemonCardContextData
 )
 
@@ -32,7 +39,7 @@ interface PokemonCardProviderProps {
     children: ReactNode
 }
 
-    const PokemonCardProvider: React.FC<PokemonCardProviderProps> = ({children}) => {
+    export const PokemonCardProvider: React.FC<PokemonCardProviderProps> = ({children}) => {
     
         const [pokemonCart , setPokemonCart] = useState<PokemonData[]>([])
         const [name,setName] = useState<string>("")
@@ -41,15 +48,21 @@ interface PokemonCardProviderProps {
 
 
 
-        const handleSearchName = (name:string) => {
+        // const handleSearchName = (name:string) => {
             
-            const searchPokemonName = pokemonCart.find((pokemon) => (
-                pokemon.name.toLowerCase().includes
-            ));
+        //     const searchPokemonName = pokemonCart.find((pokemon) => (
+        //         pokemon.name.toLowerCase().includes
+        //     ));
         
             
-            return handleSearchName(searchPoke)
-          }
+        //     return handleSearchName(searchPokemon)
+        //   }
+
+          const handleSearchName = (searchName: string) => {
+            const searchResults = pokemonCart.filter((pokemon) => pokemon.name.toLowerCase().includes(searchName.toLowerCase()));
+            // Aqui você pode fazer algo com os resultados da busca, como atualizar um estado ou exibir uma lista.
+            
+          };
 
     
  
@@ -93,6 +106,29 @@ interface PokemonCardProviderProps {
         setPokemonCart([])
       }
 
+
+      return (
+        <PokemonCardContext.Provider
+      value={{
+        pokemonCart,
+        pokemonAmount,
+        addToPokemon,
+        removePokemon,
+        removeAllClearPokemon,
+        handleSearchName,
+      }}
+    >
+      {children}
+    </PokemonCardContext.Provider>
+
+      )
+   
+    
+    
+    
+    
+    
+    
 
 
 }

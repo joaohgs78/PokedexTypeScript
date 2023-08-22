@@ -1,4 +1,6 @@
 {
+ 
+
     "env": {
       "browser": true,
       "es2021": true,
@@ -9,6 +11,7 @@
         "version": "detect"
       }
     },
+    
     "extends": [
       "eslint:recommended",
       "plugin:react/recommended",
@@ -29,4 +32,5 @@
       "react/react-in-jsx-scope": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off"
     }
+   
   }
