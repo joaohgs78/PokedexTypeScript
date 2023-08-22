@@ -1,5 +1,6 @@
 /* eslint-env node */
 
+
 module.exports = {
   env: { browser: true, es2020: true },
   extends: [
@@ -17,4 +18,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+
+  
+ 
 }
