@@ -1,136 +1,102 @@
-import React, {createContext, useState,useEffect, ReactNode,} from 'react'
-import { toast } from 'react-toastify';
-import PokemonContext from './PokemonContext'
+// libs
+import React, { createContext, useState, useEffect, ReactNode } from 'react'
+import { toast } from 'react-toastify'
+// types
+import {PokemonData,Pokemon,PokemonCardContextData} from '../types/PokemonCardTypes'
 
 
-
-
-
-
-interface PokemonData {
-    id: number
-    name: string
-    amount: number
-    types:string
-}
-
-interface Pokemon {
-  name:string,
-  url:string
-}
-
-interface PokemonCardContextData {
-  pokemonCart: PokemonData[]
-  pokemonAmount:number
-  
-  addToPokemon:(pokemon: Pokemon, name:string) => void
-  removePokemon:(id:number) => void
-  removeAllClearPokemon:() => void
-  handleSearchName:(name: string) => void
-}
-
-
-//CRIAR UMA VARIVEL PARA STARTAR NOSSO CONTEXTO 
-export const PokemonCardContext = createContext<PokemonCardContextData> (
-    {} as PokemonCardContextData
+export const PokemonCardContext = createContext<PokemonCardContextData>(
+  {} as PokemonCardContextData
 )
 
 interface PokemonCardProviderProps {
-    children: ReactNode
+  children: ReactNode
 }
 
-    export const PokemonCardProvider: React.FC<PokemonCardProviderProps> = ({children}) => {
-    
-        const [pokemonCart , setPokemonCart] = useState<PokemonData[]>([])
-        const [name,setName] = useState<string>("")
-        const [pokemonAmount, setPokemonAmout] = useState<number>(0)
-        const [searchPokemon, setSearchPokemon] = useState<string>('')
+const PokemonCardProvider: React.FC<PokemonCardProviderProps> = ({
+  children
+}) => {
+  const [pokemonCart, setPokemonCart] = useState<PokemonData[]>([])
+  const [pokemonAmount, setPokemonAmout] = useState<number>(0)
+  const [currentPage, setCurrentPage] = useState<number>(1)
 
+  const pokemonsPerPage = 10
 
+  const getCurrentPokemons = () => {
+    const indexLastPokemon = currentPage * pokemonsPerPage
+    const indexFirstPokemon = indexLastPokemon - pokemonsPerPage
 
-        // const handleSearchName = (name:string) => {
-            
-        //     const searchPokemonName = pokemonCart.find((pokemon) => (
-        //         pokemon.name.toLowerCase().includes
-        //     ));
-        
-            
-        //     return handleSearchName(searchPokemon)
-        //   }
+    return pokemonCart.slice(indexFirstPokemon, indexLastPokemon)
+  }
 
-          const handleSearchName = (searchName: string) => {
-            const searchResults = pokemonCart.filter((pokemon) => pokemon.name.toLowerCase().includes(searchName.toLowerCase()));
-            // Aqui você pode fazer algo com os resultados da busca, como atualizar um estado ou exibir uma lista.
-            
-          };
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1)
+  }
 
-    
- 
-        useEffect(() => {
+  const prevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1)
+  }
 
-         if(pokemonCart) {
-            const amount = pokemonCart.reduce(
-            (acumulator, currentItem) => acumulator + 1 ,0)
+  useEffect(() => {
+    if (pokemonCart) {
+      const amount = pokemonCart.reduce(
+        (accumulator, currentItem) => accumulator + 1,
+        0
+      )
 
-            setPokemonAmout(amount)
-         }
+      setPokemonAmout(amount)
+    }
+  }, [pokemonCart])
 
-    
-        },[pokemonCart])
+  const addToPokemon = (pokemon: Pokemon, name: string) => {
+    const checkPokemon = pokemonCart.find(
+      (pokemonData) => pokemonData.name === name
+    )
 
+    if (checkPokemon) {
+      toast.error('Esse pokemon já foi capturado !')
+      return
+    }
 
+    setPokemonCart([...pokemonCart, { name, amount: 1, id: -1 }])
+  }
 
-        const addToPokemon = (pokemon: PokemonData, name:string) => {
-        
-        const checkPokemon = pokemonCart.find((pokemon) => pokemon.name === name)
-        //pokemoncart.filter((item) => item.id !== id)
-        
-          if(checkPokemon) {
-            toast.error('Esse pokemon já foi capturado !')
-            return;
-          }
+  const removePokemon = (id: number) => {
+    const updatedPokemonCart = pokemonCart.filter(
+      (pokemonData) => pokemonData.id !== id
+    )
+    setPokemonCart(updatedPokemonCart)
+  }
 
-          setPokemonCart([...pokemonCart, {...pokemon, name, amount: 1}])
+  const removeAllClearPokemon = () => {
+    setPokemonCart([])
+  }
 
-        }
+  const searchByNamePokemon = (name: string) => {
+    const pokemonName = pokemonCart.filter((pokemon) =>
+      pokemon.name.toLowerCase().includes(name.toLowerCase())
+    )
+    setPokemonCart(pokemonName)
+  }
 
-    
-         
-      const removePokemon = (id:number) => {
-        const pokemon = pokemonCart.filter((pokemon) => pokemon.id !== id)
-        setPokemonCart(pokemon)  
-      }
-
-
-      const removeAllClearPokemon = () => {
-        setPokemonCart([])
-      }
-
-
-      return (
-        <PokemonCardContext.Provider
+  return (
+    <PokemonCardContext.Provider
       value={{
         pokemonCart,
         pokemonAmount,
+        searchByNamePokemon,
         addToPokemon,
         removePokemon,
         removeAllClearPokemon,
-        handleSearchName,
+        pokemonsPerPage,
+        getCurrentPokemons,
+        nextPage,
+        prevPage
       }}
     >
       {children}
     </PokemonCardContext.Provider>
-
-      )
-   
-    
-    
-    
-    
-    
-    
-
-
+  )
 }
 
 export default PokemonCardProvider

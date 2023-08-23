@@ -6,13 +6,13 @@ export const Container = tw.div`
   items-stretch
   justify-between
   grow
- 
-  py-5
-  px-10
-  shadow-md
+  lg:mb-0
   mb-5
-`
+  py-2
+  px-10
+  shadow-xl
 
+`
 export const LogoContainer = tw.div`
  
    flex
@@ -21,9 +21,9 @@ export const LogoContainer = tw.div`
    justify-center
    mb-5
    mr-3
-
 `
-export const LogoImg = tw.img `
+
+export const LogoImg = tw.img`
  
   flex
   flex-col
@@ -32,19 +32,17 @@ export const LogoImg = tw.img `
  
 
 `
-export const NavContainer = tw.div `
+export const NavContainer = tw.div`
  
  flex
  items-center
  lg:shrink-0
  lg:flex-nowrap
- 
-
 
  
 `
 
-export const SearchContainer = tw.div `
+export const SearchContainer = tw.div`
 
  relative
  flex
@@ -52,11 +50,11 @@ export const SearchContainer = tw.div `
  lg:ml-4
  sm:mr-2
 
+
+
 `
 
-
-
-export const SearchPlaceHolder = tw.span `
+export const SearchPlaceHolder = tw.span`
 
  absolute
  ml-4 
@@ -66,7 +64,7 @@ export const SearchPlaceHolder = tw.span `
 
 `
 
-export const inputSearch = tw.input `
+export const inputSearch = tw.input`
 
  block
  w-full
@@ -84,10 +82,10 @@ export const inputSearch = tw.input `
  bg-clip-padding
  rounded-2xl
 
+
 `
 
-
-export const iconDeleteSearch = tw.span `
+export const iconDeleteSearch = tw.span`
   
   absolute
   right-0
@@ -103,8 +101,7 @@ export const iconDeleteSearch = tw.span `
 
 `
 
-
-export const AvatarContainer = tw.div `
+export const AvatarContainer = tw.div`
  
  relative
  flex
@@ -115,7 +112,7 @@ export const AvatarContainer = tw.div `
 
 `
 
-export const AvatarIcon = tw.div `
+export const AvatarIcon = tw.div`
 
  flex 
  items-center
@@ -136,10 +133,10 @@ export const AvatarIcon = tw.div `
  border-stone-200
  
 
+
 `
 
-
-export const BagPokemon = tw.div `
+export const BagPokemon = tw.div`
 
  flex 
  items-center
@@ -159,4 +156,7 @@ export const BagPokemon = tw.div `
  rounded-2xl
  border-stone-200
  ml-3
- `
+ 
+
+
+`

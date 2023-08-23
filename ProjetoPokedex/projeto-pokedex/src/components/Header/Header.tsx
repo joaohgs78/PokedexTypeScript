@@ -1,18 +1,25 @@
-import React from 'react'
-import * as S from './style'
+// Styles
+
+import * as S from './styles'
+// Libs
+
 import { BsSearch } from 'react-icons/bs'
 import { GrFormClose } from 'react-icons/gr'
-import logo from '../../img/logo1.png'
-import  { useContext, useState } from 'react';
+import { useContext } from 'react'
+//@ts-ignore
+
+import logo from '../../assets/logo.png'
+
+// Context
 import { PokemonCardContext } from '../../context/PokemonCardContext'
 
 const Header = () => {
-  const { addToPokemon } = useContext(PokemonCardContext);
+ 
   return (
     <>
       <S.Container>
         <S.LogoContainer>
-          <S.LogoImg src={logo}></S.LogoImg>
+          <S.LogoImg src={logo} />
         </S.LogoContainer>
         <S.NavContainer>
           <S.SearchContainer>
