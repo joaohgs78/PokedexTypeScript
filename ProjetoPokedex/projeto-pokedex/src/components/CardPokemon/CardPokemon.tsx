@@ -1,26 +1,39 @@
 import React from 'react'
-import '../CardPokemon/CardPokemon.css'
-import { getTypeImageByType } from './vector/getTypesPokemonImg'
-// import TypeBadge from './TypeBadge'
+import {useNavigate} from 'react-router-dom'
+import {goToPokemonDetailPage} from '../../routes/condinator'
+
+import { getTypeImageByType } from '../../components/CardPokemon/vector/getTypesPokemonImg'
+
 //@ts-ignore
 import pokebola from '../../assets/pokebola.png'
-import { PokemonCardContext } from '../../context/PokemonCardContext'
-import  { useContext } from 'react';
+import {
+  PokemonCardContext,
+  PokemonData
+} from '../../context/PokemonCardContext'
+
+import { useContext } from 'react'
+import * as S from '../../components/CardPokemon/styles'
+
+//@ts-ignore
+import pokeBolaSemFundo from '../../assets/pokeBolaSemFundo.png'
 
 const CardPokemon = ({
   name,
   image,
   types,
-  stats
+  pokemon,
+  id // stats
 }: {
+  pokemon: PokemonData
   name: string
   image: string
   types: string
-  stats: Array<{
-    base_stat: number
-    effort: number
-    stat: { name: string }
-  }>
+  id: number
+  // stats: Array<{
+  //   base_stat: number
+  //   effort: number
+  //   stat: { name: string }
+  // }>
 }) => {
   console.log(types)
 
@@ -30,70 +43,36 @@ const CardPokemon = ({
   const typeM = types
   const newTypeM = typeM.toUpperCase()
 
-  const { addToPokemon, handleSearchName } = useContext(PokemonCardContext);
+  const { addToPokemon } = useContext(PokemonCardContext)
+  console.log('aki --------------------', addToPokemon)
+
+  const navigate = useNavigate()
 
   return (
-    <div className="card">
-      <div className="content">
-        <div className="back">
-          <div className="back-content">
-            <img src={image} />
-            {/* <strong>Hover Me</strong> */}
-          </div>
-        </div>
-        <div className="front">
-          <div className="img">
-            <div className="circle"></div>
-            <div className="circle" id="right"></div>
-            <div className="circle" id="bottom"></div>
-          </div>
-
-          <div className="front-content">
-            {/* <small className="badge">{stats}</small> */}
-            <div className="glow-on-hover">
-              {stats.map((stat, index) => (
-                <div key={index} className="stat">
-                  <span>
-                    {stat.stat.name === 'hp'
-                      ? 'HP'
-                      : stat.stat.name === 'special-attack'
-                      ? 'Sp. Atk'
-                      : stat.stat.name === 'special-defense'
-                      ? 'Sp. Def'
-                      : stat.stat.name}{' '}
-                    : {stat.base_stat}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="description">
-              <div className="title">
-                <p className="title">
-                  <strong>{newName}</strong>
-                </p>
-              </div>
-           
-              <div className="card-footer">
-                {types.split(', ').map((type, index) => (
-                  <span key={index} className="type">
-                    <img src={getTypeImageByType(type)} alt={type} />
-                    
-                    {newTypeM} 
-                   
-                    
-                   </span> 
-                   
-                 ))} 
-                 
-                 
-                
-              </div>
-            </div>
-          </div>
-        </div>
+    <S.Card key={''} name={''} type={types}>
+      <div className="imgBx">
+        <img src={image} alt="Pokemon sprites" />
       </div>
-    </div>
+
+      <S.pokeImg src={pokeBolaSemFundo} alt="Pokebola Sem fundo" />
+
+      <div className="contentBx">
+        <S.TextNamePokemon>{name}</S.TextNamePokemon>
+        <div className="size">
+          <S.pokeTypes>
+            {types.split(' ').map((type, index) => (
+              <span key={index} className="type">
+                <S.CardTypesImg src={getTypeImageByType(type)} alt={type} />
+              </span>
+            ))}
+          </S.pokeTypes>
+        </div>
+        <button onClick={() => addToPokemon(pokemon)}>
+          <img className="pokebola" src={pokebola} alt="" />
+        </button>
+        <button onClick={() => goToPokemonDetailPage(navigate, name, types)}>Detalhes</button>
+      </div>
+    </S.Card>
   )
 }
 
