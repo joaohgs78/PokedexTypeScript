@@ -12,6 +12,7 @@ export const Container = tw.div`
   px-10
   shadow-xl
 
+
 `
 export const LogoContainer = tw.div`
  
@@ -29,9 +30,22 @@ export const LogoImg = tw.img`
   flex-col
   justify-center
   w-24
+  cursor-pointer
  
 
 `
+export const LogoPokebolaCap = tw.img`
+ 
+  flex
+  flex-col
+  justify-center
+  w-24
+  cursor-pointer
+ 
+
+`
+
+
 export const NavContainer = tw.div`
  
  flex
@@ -149,8 +163,8 @@ export const BagPokemon = tw.div`
  duration-150
  ease-in-out
  bg-transparent
- border
- border-solid
+ 
+
  shadow-none
  cursor
  rounded-2xl

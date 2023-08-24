@@ -1,13 +1,10 @@
-// Components
-import Home from './pages/Home/Home'
-import Header from './components/Header/Header'
-import React from 'react'
+import Router from './routes/Router'
 
 function App() {
   return (
     <>
-    <Header/>
-    <Home/>
+
+    <Router/>
   
     </>
   )
