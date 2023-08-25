@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 
 interface CardProps {
@@ -154,15 +155,16 @@ export const Card = styled.div<CardProps>`
   .pokebola {
     display: inline-block;
     border-radius: 4px;
-    margin-top: 10px;
+    
     text-decoration: none;
-    width: 28%;
+    width: 24%;
     color: #111;
     opacity: 0;
     transform: translateY(50px);
     transition: 0.5s;
     margin-top: 0;
     cursor: pointer;
+    margin-bottom: 20px;
   }
 
   &:hover .pokebola {
@@ -194,6 +196,20 @@ export const CardTypesImg = styled.img`
   width: 30px;
   height: auto;
 `
+export const LinkStyled = styled(Link)`
+  background-color: #548c1c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color:   #007bff;
+  }
+`;
 
 export const TextNamePokemon = styled.h2`
   position: relative;
@@ -207,3 +223,5 @@ export const TextNamePokemon = styled.h2`
   -webkit-background-clip: text;
   color: transparent;
 `
+
+

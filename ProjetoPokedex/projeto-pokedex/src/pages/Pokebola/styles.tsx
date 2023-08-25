@@ -15,3 +15,27 @@ export const CardContainer = styled.div`
   cursor: pointer;
 
 `
+export const PokeFantasmaContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px; 
+`;
+
+export const PokeFantasma = styled.img`
+  width: 200px; 
+  height: auto; 
+  
+`
+export const PokeFantasma2 = styled.img`
+  width: 200px; 
+  height: auto; 
+`
+export const PokeFantasma4 = styled.img`
+  width: 200px; 
+  height: auto; 
+`
+export const PokeFantasma5 = styled.img`
+  width: 200px; 
+  height: auto; 
+`
+

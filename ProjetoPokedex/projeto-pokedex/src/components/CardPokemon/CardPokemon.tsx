@@ -1,6 +1,5 @@
 import React from 'react'
-import {useNavigate} from 'react-router-dom'
-import {goToPokemonDetailPage} from '../../routes/condinator'
+import { Link } from 'react-router-dom'
 
 import { getTypeImageByType } from '../../components/CardPokemon/vector/getTypesPokemonImg'
 
@@ -17,39 +16,35 @@ import * as S from '../../components/CardPokemon/styles'
 //@ts-ignore
 import pokeBolaSemFundo from '../../assets/pokeBolaSemFundo.png'
 
+
+
 const CardPokemon = ({
   name,
   image,
   types,
   pokemon,
-  id // stats
+  id
 }: {
   pokemon: PokemonData
   name: string
   image: string
   types: string
   id: number
-  // stats: Array<{
-  //   base_stat: number
-  //   effort: number
-  //   stat: { name: string }
-  // }>
 }) => {
-  console.log(types)
+  const { addToPokemon, removePokemon } = useContext(PokemonCardContext)
 
-  const capitalFirstLetter = name
-  const newName = capitalFirstLetter.toUpperCase()
 
-  const typeM = types
-  const newTypeM = typeM.toUpperCase()
 
-  const { addToPokemon } = useContext(PokemonCardContext)
-  console.log('aki --------------------', addToPokemon)
-
-  const navigate = useNavigate()
+  
 
   return (
-    <S.Card key={''} name={''} type={types}>
+    // DENTRO DO CARD SE VAI USAR UM USEHISTORY PARA SABER SE ESTA DENTRO /POKEBOLA
+    // ESTIVER VOCÊ VAI RENDERIZAR O BOTÃO DE REMOVE E A SEGUINTE MENSAGEM POKEMON CAPTURADOS
+    // SE NÃO RENDERIZE O CARD NORMAL
+    // se pokeboal tiver vazia voltar para home
+    //
+
+    <S.Card key={id} name={pokemon.name} type={types}>
       <div className="imgBx">
         <img src={image} alt="Pokemon sprites" />
       </div>
@@ -60,17 +55,24 @@ const CardPokemon = ({
         <S.TextNamePokemon>{name}</S.TextNamePokemon>
         <div className="size">
           <S.pokeTypes>
-            {types.split(' ').map((type, index) => (
-              <span key={index} className="type">
-                <S.CardTypesImg src={getTypeImageByType(type)} alt={type} />
-              </span>
-            ))}
+            {Object.values(pokemon.types).map((typeInfo) => {
+              return (
+                <S.pokeTypesImg
+                  key={typeInfo.type.name}
+                  src={getTypeImageByType(typeInfo.type.name)}
+                />
+              )
+            })}
           </S.pokeTypes>
         </div>
         <button onClick={() => addToPokemon(pokemon)}>
           <img className="pokebola" src={pokebola} alt="" />
         </button>
-        <button onClick={() => goToPokemonDetailPage(navigate, name, types)}>Detalhes</button>
+
+        {/* <Link to={`/pokemon/${name}`}>Detalhes</Link> */}
+        <S.LinkStyled to={`/pokemon/${name}`}>Detalhes</S.LinkStyled>
+      
+        
       </div>
     </S.Card>
   )
