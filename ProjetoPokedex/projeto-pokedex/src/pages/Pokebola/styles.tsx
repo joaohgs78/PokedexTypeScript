@@ -13,12 +13,15 @@ export const CardContainer = styled.div`
   no-repeat center center fixed;
   background-size: cover;
   cursor: pointer;
-
+  
 `
 export const PokeFantasmaContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 20px; 
+ padding-top: 100px;
+ 
 `;
 
 export const PokeFantasma = styled.img`
@@ -37,5 +40,20 @@ export const PokeFantasma4 = styled.img`
 export const PokeFantasma5 = styled.img`
   width: 200px; 
   height: auto; 
+`
+
+export const DivContainer = styled.div`
+  
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  
+  p{margin-top:30px}
+  /* background: #5D5D5D; */
+  background: linear-gradient(#5D5D5D, #430157);
+  height: 100vh;
+  p{color:white}
+  
+
 `
 

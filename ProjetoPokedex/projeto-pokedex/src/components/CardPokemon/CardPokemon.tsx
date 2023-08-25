@@ -38,11 +38,8 @@ const CardPokemon = ({
   
 
   return (
-    // DENTRO DO CARD SE VAI USAR UM USEHISTORY PARA SABER SE ESTA DENTRO /POKEBOLA
-    // ESTIVER VOCÊ VAI RENDERIZAR O BOTÃO DE REMOVE E A SEGUINTE MENSAGEM POKEMON CAPTURADOS
-    // SE NÃO RENDERIZE O CARD NORMAL
-    // se pokeboal tiver vazia voltar para home
-    //
+   
+    // TRAZER O TYPE 
 
     <S.Card key={id} name={pokemon.name} type={types}>
       <div className="imgBx">

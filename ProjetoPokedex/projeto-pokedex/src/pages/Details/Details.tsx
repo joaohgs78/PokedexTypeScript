@@ -56,9 +56,11 @@ const PokemonDetails = () => {
       default:
         color = 'transparent'
     }
-
+    // TROCAR DETAILS PARA STYLED
     return (
       <>
+
+          
         <Header />
 
         <div className="w-full min-h-screen bg-gray-200 p-3 sm:p-6 md:p-12">

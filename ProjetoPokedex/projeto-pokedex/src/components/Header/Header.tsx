@@ -23,7 +23,7 @@ const Header = () => {
           </Link>
         </S.LogoContainer>
         <S.NavContainer>
-          <S.SearchContainer>
+          {/* <S.SearchContainer>
             <S.SearchPlaceHolder>
               <BsSearch size={20} />
             </S.SearchPlaceHolder>
@@ -33,7 +33,7 @@ const Header = () => {
             <S.iconDeleteSearch>
               <GrFormClose />
             </S.iconDeleteSearch>
-          </S.SearchContainer>
+          </S.SearchContainer> */}
 
           <S.AvatarContainer>
             <S.BagPokemon>
