@@ -15,23 +15,28 @@ import pokemonfantasma5 from '../../assets/pokemonfantasma5.png'
 
 
 const Pokebola = () => {
+
+  //ADICONAR FUNÇÃO DE REMOVER POKEMON
+  //ADICIONAR CONTADOR POKEMON NA POKEBOLA 
   const { pokemonCart } = useContext(PokemonCardContext);
 
   return (
     <div>
       <Header />
       {pokemonCart.length === 0 ? (
-         <div>
+         <S.DivContainer>
          <S.PokeFantasmaContainer>
            <S.PokeFantasma src={pokemonfantasma1} alt="" />
            <S.PokeFantasma2 src={pokemonfantasma2} alt="" />
            <S.PokeFantasma4 src={pokemonfantasma4} alt="" />
            <S.PokeFantasma5 src={pokemonfantasma5} alt="" />
+           
          </S.PokeFantasmaContainer>
          
-         Você não capturou nenhum Pokémon ainda, só tem fantasmas aqui!
+         <p>Você não capturou nenhum Pokémon ainda, só tem fantasmas aqui!</p>
+         </S.DivContainer>
         
-       </div>
+       
         
 
       ) : (
