@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { getTypeImageByType } from '../../components/CardPokemon/vector/getTypesPokemonImg'
 
@@ -15,8 +15,8 @@ import * as S from '../../components/CardPokemon/styles'
 
 //@ts-ignore
 import pokeBolaSemFundo from '../../assets/pokeBolaSemFundo.png'
-
-
+//@ts-ignore
+import pokebolaaberta from '../../assets/pokebolaberta4.png'
 
 const CardPokemon = ({
   name,
@@ -33,13 +33,10 @@ const CardPokemon = ({
 }) => {
   const { addToPokemon, removePokemon } = useContext(PokemonCardContext)
 
-
-
-  
+  const location = useLocation()
 
   return (
-   
-    // TRAZER O TYPE 
+    // TRAZER O TYPE
 
     <S.Card key={id} name={pokemon.name} type={types}>
       <div className="imgBx">
@@ -62,14 +59,21 @@ const CardPokemon = ({
             })}
           </S.pokeTypes>
         </div>
-        <button onClick={() => addToPokemon(pokemon)}>
-          <img className="pokebola" src={pokebola} alt="" />
-        </button>
 
-        {/* <Link to={`/pokemon/${name}`}>Detalhes</Link> */}
-        <S.LinkStyled to={`/pokemon/${name}`}>Detalhes</S.LinkStyled>
+        {location.pathname === '/' && (
+          <button onClick={() => addToPokemon(pokemon)}>
+            <img className="pokebola" src={pokebola} alt="" />
+          </button>
+        )}
+        {location.pathname === '/pokebola' && (
+          <button onClick={() => removePokemon(id)} >
+            <img className="pokebola" src={pokebolaaberta} alt="" />
+          </button>
+        )}
+
       
-        
+
+        <S.LinkStyled to={`/pokemon/${name}`}>Detalhes</S.LinkStyled>
       </div>
     </S.Card>
   )

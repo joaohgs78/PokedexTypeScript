@@ -3,7 +3,7 @@ import React from 'react';
 import * as S from '../../pages/Pokebola/styles';
 import { PokemonCardContext } from '../../context/PokemonCardContext';
 import CardPokemon from '../../components/CardPokemon/CardPokemon';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 //@ts-ignore
 import pokemonfantasma1 from '../../assets/pokemonfantasma1.png'
 //@ts-ignore
@@ -14,11 +14,16 @@ import pokemonfantasma4 from '../../assets/pokemonfantasma4.png'
 import pokemonfantasma5 from '../../assets/pokemonfantasma5.png'
 
 
-const Pokebola = () => {
+const Pokebola = ({
+  
+}) => {
 
-  //ADICONAR FUNÇÃO DE REMOVER POKEMON
+  
   //ADICIONAR CONTADOR POKEMON NA POKEBOLA 
-  const { pokemonCart } = useContext(PokemonCardContext);
+  const { pokemonCart, removePokemon } = useContext(PokemonCardContext);
+   
+
+   
 
   return (
     <div>
@@ -50,8 +55,10 @@ const Pokebola = () => {
               id={pokemon.id}
             />
           ))}
+          
         </S.CardContainer>
       )}
+      
     </div>
   );
 };
