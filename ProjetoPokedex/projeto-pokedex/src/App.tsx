@@ -5,6 +5,7 @@ import Home from './pages/Home/Home'
 import PokemonDetails from './pages/Details/Details'
 import Pokebola from './pages/Pokebola/Pokebola'
 
+
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
           <Route path="/pokebola" element={<Pokebola/>} ></Route> 
         </Routes>
       </Router>
+      
     </div>
     
   

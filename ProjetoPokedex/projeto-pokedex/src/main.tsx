@@ -6,6 +6,8 @@ import './index.css'
 // Auth
 import PokemonProvider from './context/PokemonContext.tsx'
 import PokemonCardProvider from './context/PokemonCardContext'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 const rootElement = document.getElementById('root')
 if (rootElement) {
@@ -14,6 +16,7 @@ if (rootElement) {
       <PokemonProvider>
         <React.StrictMode>
           <App />
+          <ToastContainer/>
         </React.StrictMode>
       </PokemonProvider>
     </PokemonCardProvider>

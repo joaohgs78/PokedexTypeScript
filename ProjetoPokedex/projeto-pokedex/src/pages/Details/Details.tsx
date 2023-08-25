@@ -2,7 +2,7 @@ import React from 'react'
 import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { PokemonContext } from '../../context/PokemonContext'
-import { PokemonData } from 'context/PokemonCardContext'
+
 import Header from '../../components/Header/Header'
 //@ts-ignore
 import asgIcon from '../../assets/iconAshGif.gif'
@@ -59,8 +59,6 @@ const PokemonDetails = () => {
     // TROCAR DETAILS PARA STYLED
     return (
       <>
-
-          
         <Header />
 
         <div className="w-full min-h-screen bg-gray-200 p-3 sm:p-6 md:p-12">
@@ -77,6 +75,7 @@ const PokemonDetails = () => {
                 <div>
                   <img
                     src={pokemon.sprites.other.dream_world.front_default}
+                    
                     alt="Placeholder"
                     className="w-full h-full object-cover object-center"
                   />
@@ -104,9 +103,17 @@ const PokemonDetails = () => {
                     </p>
                   </div>
 
-                  {(pokemon.types).map((typeInfo: string) => {
+                  {Object.keys(pokemon.types).map((key) => {
+                    const typeInfo = pokemon.types[key]
+                    const typeName = typeInfo.type.name
+
                     return (
-                      <div className="text-center font-normal text-lg capitalize flex">{typeInfo.name}</div>
+                      <div
+                        key={typeName}
+                        className="text-center font-normal text-lg capitalize flex"
+                      >
+                        {typeName}
+                      </div>
                     )
                   })}
                 </div>
@@ -266,14 +273,22 @@ const PokemonDetails = () => {
                   >
                     <div className="p-3 text-xl w-64">
                       <img
-                        src={pokemon.sprites.front_default}
+                        // src={pokemon.sprites.front_default}
+                        src={
+                          pokemon.sprites.versions['generation-v']['black-white'].animated
+                            .front_default
+                        }
                         alt="Placeholder"
                         className="w-full h-full object-cover object-center"
                       />
+                      
                     </div>
                     <div className="p-3 text-xl w-64 ">
                       <img
-                        src={pokemon.sprites.back_default}
+                        src={
+                          pokemon.sprites.versions['generation-v']['black-white'].animated
+                            .back_default
+                        }
                         alt="Placeholder"
                         className="w-full h-full object-cover object-center"
                       />
