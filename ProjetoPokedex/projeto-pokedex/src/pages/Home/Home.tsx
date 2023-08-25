@@ -43,7 +43,7 @@ const Home = () => {
               pokemon={pokemon}
               name={pokemon.name}
               image={pokemon.sprites.other.dream_world.front_default}
-              types={pokemon.types[0].type.name || 'normal'}
+              types={pokemon.types[0].type.name}
               id={pokemon.id}
             />
           )

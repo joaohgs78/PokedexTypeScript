@@ -149,11 +149,13 @@ export interface PokemonData {
 export interface PokemonCardContextData {
   pokemonCart: PokemonData[]
   addToPokemon: (pokemon: PokemonData) => void
+  removePokemon: (id: number) => void
 }
 
 export const PokemonCardContext = createContext<PokemonCardContextData>({
   pokemonCart: [],
-  addToPokemon: () => { }
+  addToPokemon: () => { },
+  removePokemon: () => { }
 })
 
 interface PokemonCardProviderProps {
@@ -178,9 +180,19 @@ const PokemonCardProvider: React.FC<PokemonCardProviderProps> =
       setPokemonCart([...pokemonCart, { ...pokemon }]);
     };
 
+
+    const removePokemon = (id: number) => {
+           const updatedPokemonCart = pokemonCart.filter(
+            (pokemonData) => pokemonData.id !== id
+          )
+         setPokemonCart(updatedPokemonCart)
+       }
+
+       
+
     return (
       <PokemonCardContext.Provider
-        value={{ pokemonCart, addToPokemon }}
+        value={{ pokemonCart, addToPokemon, removePokemon }}
       >
         {children}
       </PokemonCardContext.Provider>

@@ -22,3 +22,27 @@
   
  
 }
+
+
+
+.progress-green::-webkit-progress-value {
+  background-color: green;
+ 
+}
+
+.progress-yellow::-webkit-progress-value {
+  background-color: yellow;
+  
+}
+
+.progress-red::-webkit-progress-value {
+  background-color: red;
+ 
+}
+
+/* estilos comuns a todas as barras */
+progress {
+  width: 70%;
+  height: 16px;
+ 
+}

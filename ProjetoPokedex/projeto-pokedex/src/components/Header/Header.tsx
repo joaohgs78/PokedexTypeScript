@@ -1,6 +1,5 @@
-import {useNavigate} from 'react-router-dom'
-import {goToPokebola} from '../../routes/condinator'
-import {goToHome} from '../../routes/condinator'
+import { Link } from 'react-router-dom'
+
 import * as S from './styles'
 // Libs
 import { BsSearch } from 'react-icons/bs'
@@ -11,12 +10,17 @@ import logo from '../../assets/logo1.png'
 import pokebola from '../../assets/pokebola.png'
 
 const Header = () => {
-  const navigate = useNavigate()
+
+  // se o array da pokemoncart estiver vazios não vai para pokebola ->
+  // ou aparece uma mensagem dizendo sua pokebola esta vazia 
+  // pesquise tostify para mensagem personalizadas
   return (
     <>
       <S.Container>
-        <S.LogoContainer >
-          <S.LogoImg  src={logo} onClick={() => goToHome(navigate)}/>
+        <S.LogoContainer>
+          <Link to={'/'}>
+            <S.LogoImg src={logo} />
+          </Link>
         </S.LogoContainer>
         <S.NavContainer>
           <S.SearchContainer>
@@ -32,9 +36,11 @@ const Header = () => {
           </S.SearchContainer>
 
           <S.AvatarContainer>
-            
-            <S.BagPokemon  >
-              <S.LogoPokebolaCap onClick={() => goToPokebola(navigate)} src={pokebola}/>
+            <S.BagPokemon>
+              <Link to={"/pokebola"}>
+              <S.LogoPokebolaCap src={pokebola} />
+              </Link>
+              
             </S.BagPokemon>
           </S.AvatarContainer>
         </S.NavContainer>
